@@ -8,14 +8,16 @@ public class DataUser
     }
 
     public string SUserName;
+    public bool IsWhite;
 
     public string DebugThis()
     {
-        return "SUserName = " + SUserName;
+        return "SUserName = " + SUserName + "\nIsWhite = " + IsWhite;
     }
 
     public void ClearData()
     {
         SUserName = "";
+        IsWhite = false;
     }
 }

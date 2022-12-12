@@ -21,6 +21,8 @@ public class ManagerLogin : MonoBehaviour
 
     private void Start()
     {
+        _scrObjRepoUser.ClearData();
+
         if (PlayerPrefs.HasKey(_sUserNamePrefKey))
         {
             string s_username = PlayerPrefs.GetString(_sUserNamePrefKey);
@@ -28,10 +30,6 @@ public class ManagerLogin : MonoBehaviour
             _inputFieldUserName.text = s_username;
 
             _scrObjRepoUser.CsDataUser.SUserName = s_username;
-        }
-        else
-        {
-            _scrObjRepoUser.ClearData();
         }
     }
 
