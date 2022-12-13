@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class GeneratorPiece : MonoBehaviour
 {
-    public enum EnumFacing { Forward, Backward }
-    public EnumFacing Facing;
-
     [Header("Repositories")]
     [SerializeField] private RepositoryPiece _scrObjRepoPiece;
     [SerializeField] private RepositoryUser _scrObjRepoUser;
@@ -77,7 +74,7 @@ public class GeneratorPiece : MonoBehaviour
         cs_prefabpiece.CsDataPiece = csDataPiece;
         cs_prefabpiece.CsPrefabBoardFloorCurrent = cs_prefabboardfloor;
         cs_prefabpiece.CsManagerMovePiece = _csManagerMovePiece;
-        cs_prefabpiece.SetIsEnemy(_scrObjRepoUser.CsDataUser.IsWhite);
+        cs_prefabpiece.InstantiatePiece(csDataPiece.GameObjPiece, _scrObjRepoUser.CsDataUser.IsWhite && csDataPiece.isWhite);
 
         gameobj_piece.transform.localPosition = cs_prefabboardfloor.transform.localPosition;
     }

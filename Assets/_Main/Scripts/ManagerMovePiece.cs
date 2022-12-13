@@ -6,97 +6,59 @@ public class ManagerMovePiece : MonoBehaviour
 {
     [Header("Classes")]
     [SerializeField] private GeneratorBoardFloor _csGeneratorBoardFloor;
+    [SerializeField] private GeneratorMovePiece _csGeneratorMovePiece;
+    [SerializeField] private EliminatorPiece _csEliminatorPiece;
     [SerializeField] private CustomDebug _csCustomDebug;
 
     [Header("Temp")]
     private PrefabPiece _csPrefabPieceActive;
-    private List<PrefabBoardFloor> _listPrefabBoardFloorDestinationHighlight = new List<PrefabBoardFloor>();
     private PrefabBoardFloor _csPrefabBoardFloorHistoryStart;
     private PrefabBoardFloor _csPrefabBoardFloorHistoryFinish;
 
-    public void HighlightFloor(PrefabPiece csPrefabPiece)
+    public void SelectPiece(PrefabPiece csPrefabPiece)
     {
+        Debug.Log(_csCustomDebug.DebugColor(this.name + " SelectPiece") + " Begin : \ncsPrefabPiece : " + csPrefabPiece.CsDataPiece.DebugThis());
+
         if (_csPrefabPieceActive == csPrefabPiece)
         {
             ClearPrefabPieceActive();
-            ClearPrefabBoardFloorHighlight();
+            _csGeneratorMovePiece.ClearPrefabBoardFloorHighlight();
             return;
         }
 
         ClearPrefabPieceActive();
-        ClearPrefabBoardFloorHighlight();
 
-        csPrefabPiece.CsPrefabBoardFloorCurrent.SteppedActive();
+        csPrefabPiece.ActivatePiece();
 
         _csPrefabPieceActive = csPrefabPiece;
 
-        foreach (PrefabBoardFloor cs_prefabboardfloor in _csGeneratorBoardFloor.ListPrefabBoardFloor)
-        {
-            if (cs_prefabboardfloor != csPrefabPiece.CsPrefabBoardFloorCurrent)
-            {
-                cs_prefabboardfloor.TurnOnHighlight();
-                _listPrefabBoardFloorDestinationHighlight.Add(cs_prefabboardfloor);
-            }
-        }
-    }
-
-    public void ValidateEnemy(PrefabPiece csPrefabPiece)
-    {
-        //To Do Destroy Enemy
-
-        SelectFloor(csPrefabPiece.CsPrefabBoardFloorCurrent);
-
-        Destroy(csPrefabPiece.gameObject);
+        _csGeneratorMovePiece.GenerateMovePiece(csPrefabPiece);
     }
 
     public void SelectFloor(PrefabBoardFloor csPrefabBoardFloor)
     {
         Debug.Log(_csCustomDebug.DebugColor(this.name + " SelectFloor") + " Begin : \ncsPrefabBoardFloor : " + csPrefabBoardFloor.DebugThis());
 
-        if (_csPrefabPieceActive != null)
+        if(csPrefabBoardFloor.CsPrefabPieceStepOn != null)
         {
-            if (_csPrefabPieceActive.CsPrefabBoardFloorCurrent == csPrefabBoardFloor)
-            {
-                Debug.Log("Not Selected, You Can Not Move to Same Position");
-
-                ClearPrefabPieceActive();
-                ClearPrefabBoardFloorHighlight();
-            }
-            else
-            {
-                Debug.Log("Selected, _csPrefabBoardFloorCurrentHighlight is Not Null");
-
-                SetPrefabBoardHistory(csPrefabBoardFloor);
-
-                _csPrefabPieceActive.MovePiece(csPrefabBoardFloor);
-
-                ClearPrefabPieceActive();
-                ClearPrefabBoardFloorHighlight();
-            }
+            _csEliminatorPiece.EliminatePiece(csPrefabBoardFloor.CsPrefabPieceStepOn);
         }
-        else
-        {
-            Debug.Log("SelectFloor Skip, _csPrefabBoardFloorCurrentHighlight is Null");
-        }
+
+        SetPrefabBoardHistory(csPrefabBoardFloor);
+
+        _csPrefabPieceActive.MovePiece(csPrefabBoardFloor);
+
+        ClearPrefabPieceActive();
+        _csGeneratorMovePiece.ClearPrefabBoardFloorHighlight();
     }
 
     private void ClearPrefabPieceActive()
     {
         if (_csPrefabPieceActive != null)
         {
-            _csPrefabPieceActive.CsPrefabBoardFloorCurrent.SteppedInactive();
+            _csPrefabPieceActive.DeactivatePiece();
             _csPrefabPieceActive = null;
         }
-    }
-
-    private void ClearPrefabBoardFloorHighlight()
-    {
-        foreach (PrefabBoardFloor cs_prefabboardfloor in _listPrefabBoardFloorDestinationHighlight)
-        {
-            cs_prefabboardfloor.TurnOffHighlight();
-        }
-
-        _listPrefabBoardFloorDestinationHighlight.Clear();
     }
 
     private void SetPrefabBoardHistory(PrefabBoardFloor csPrefabBoardFloor)

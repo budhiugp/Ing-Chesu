@@ -3,7 +3,7 @@ using UnityEngine;
 public class CustomDebug : MonoBehaviour
 {
     /// <summary>
-    /// Custom Debug with colors for easy recognize ^_^ . THe color is white.
+    /// Custom Debug with colors for easy recognize ^_^ . The color is white.
     /// </summary>
     public string DebugColor(string sDebug) 
     {

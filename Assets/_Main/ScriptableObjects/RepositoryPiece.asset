@@ -17,47 +17,59 @@ MonoBehaviour:
     SName: Black Bishop
     GameObjPiece: {fileID: 5528786406162248508, guid: 166854109031d344781a811b48abe05b, type: 3}
     isWhite: 0
+    ListMovementType: 02000000
   - CId: 107
     SName: Black King
     GameObjPiece: {fileID: 3060155601292025937, guid: 0a418f0435ddb894290ab19ebb93094a, type: 3}
     isWhite: 0
+    ListMovementType: 05000000
   - CId: 110
     SName: Black Knight
     GameObjPiece: {fileID: 6640384297393960243, guid: e27534024dbe1f14b8320d856d0111cd, type: 3}
     isWhite: 0
+    ListMovementType: 03000000
   - CId: 112
     SName: Black Pawn
     GameObjPiece: {fileID: 5528012990156907840, guid: e47e544f1fbea904db60ad2a69447d4c, type: 3}
     isWhite: 0
+    ListMovementType: 04000000
   - CId: 113
     SName: Black Queen
     GameObjPiece: {fileID: 821447894075407966, guid: 897172585e355684cb7fb797110dfe3c, type: 3}
     isWhite: 0
+    ListMovementType: 000000000100000002000000
   - CId: 114
     SName: Black Rook
     GameObjPiece: {fileID: 8004168972455267040, guid: e1dd5382bbf7a03468c0daf2492aec98, type: 3}
     isWhite: 0
+    ListMovementType: 0000000001000000
   - CId: 66
     SName: White Bishop
     GameObjPiece: {fileID: 2691081581646248775, guid: 0fe80e618beae4e4c805b808b79a0612, type: 3}
     isWhite: 1
+    ListMovementType: 02000000
   - CId: 75
     SName: White King
     GameObjPiece: {fileID: 6042820768626301675, guid: 4b905b16a1766cc458ac9acf27213093, type: 3}
     isWhite: 1
+    ListMovementType: 05000000
   - CId: 78
     SName: White Knight
     GameObjPiece: {fileID: 643439194541621990, guid: d1186734d61261b4bb45fecf4511db62, type: 3}
     isWhite: 1
+    ListMovementType: 03000000
   - CId: 80
     SName: White Pawn
     GameObjPiece: {fileID: 8504468875276430988, guid: afe35829b0fdc6d4683280b34a00a63c, type: 3}
     isWhite: 1
+    ListMovementType: 04000000
   - CId: 81
     SName: White Queen
     GameObjPiece: {fileID: 2291208539449608585, guid: 25d71c79a8393734a83150cba1a79e3f, type: 3}
     isWhite: 1
+    ListMovementType: 000000000100000002000000
   - CId: 82
     SName: White Rook
     GameObjPiece: {fileID: 5038936618978051269, guid: 777346e41d82f78478f6f34c1bd65cbd, type: 3}
     isWhite: 1
+    ListMovementType: 0000000001000000

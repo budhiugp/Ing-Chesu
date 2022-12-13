@@ -14,8 +14,6 @@ public class PrefabBoardFloor : MonoBehaviour
 
     [SerializeField] private PrefabPiece _csPrefabPieceStepOn;
 
-    public bool _isSteppedActive;
-
     public DataBoardFloor CsDataBoardFloor
     {
         set
@@ -82,36 +80,12 @@ public class PrefabBoardFloor : MonoBehaviour
 
     public void SteppedOn(PrefabPiece csPrefabPiece)
     {
-        if (_csPrefabPieceStepOn != null)
-        {
-            Debug.LogWarning("Enemy Piece Will Be Destroyed");
-        }
         _csPrefabPieceStepOn = csPrefabPiece;
     }
 
     public void SteppedOff()
     {
         _csPrefabPieceStepOn = null;
-
-        SteppedInactive();
-    }
-
-    public void SteppedActive()
-    {
-        Debug.LogWarning("SteppedActive");
-
-        _isSteppedActive = true;
-
-        TurnOnHighlight();
-    }
-
-    public void SteppedInactive()
-    {
-        Debug.LogWarning("SteppedActive");
-
-        _isSteppedActive = false;
-
-        TurnOffHighlight();
     }
 
     public void TurnOnHighlight()
@@ -126,11 +100,7 @@ public class PrefabBoardFloor : MonoBehaviour
 
     public void SelectFloor()
     {
-        Debug.Log("SelectFloor _isSteppedActive = " + _isSteppedActive);
-        if (!_isSteppedActive)
-        {
-            _csManagerMovePiece.SelectFloor(this);
-        }
+        _csManagerMovePiece.SelectFloor(this);
     }
 
     public void TurnOnHistory()

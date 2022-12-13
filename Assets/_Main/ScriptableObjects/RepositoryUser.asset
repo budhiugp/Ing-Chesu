@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: RepositoryUser
   m_EditorClassIdentifier: 
   CsDataUser:
-    SUserName: 
+    SUserName: Elraida
+    IsWhite: 0

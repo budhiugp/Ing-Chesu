@@ -14,4 +14,9 @@ public class RepositoryUser : ScriptableObject
     {
         CsDataUser.ClearData();
     }
+
+    public void Debug()
+    {
+        CsDataUser.IsWhite = true;
+    }
 }

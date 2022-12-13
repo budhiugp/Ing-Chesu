@@ -3,12 +3,17 @@ using UnityEngine;
 public class PrefabPiece : MonoBehaviour
 {
     [SerializeField] private DataPiece _csDataPiece;
-    [SerializeField] private bool _isEnemy;
+
+    [SerializeField] private Color _colorFlickerWhite = Color.blue;
+    [SerializeField] private Color _colorFlickerBlack = Color.red;
+
+    private bool _isOnFirstFloor;
 
     [SerializeField] private PrefabBoardFloor _csPrefabBoardFloorCurrent;
 
     private ManagerMovePiece _csManagerMovePiece;
     [SerializeField] private BehaviourMoveTransformB _csBehaviourMoveTransformB;
+    [SerializeField] private BehaviourMaterialFlickerA _csBehaviourMaterialFlickerA;
 
     public DataPiece CsDataPiece
     {
@@ -19,14 +24,20 @@ public class PrefabPiece : MonoBehaviour
         set
         {
             _csDataPiece = value;
-            InstantiatePiece(value.GameObjPiece);
+            _isOnFirstFloor = true;
         }
     }
 
-    public void SetIsEnemy(bool isWhite)
+    public bool IsOnFirstFloor
     {
-        if (_csDataPiece.isWhite == isWhite) _isEnemy = true;
-        else _isEnemy = false;
+        get
+        {
+            return _isOnFirstFloor;
+        }
+        set
+        {
+            _isOnFirstFloor = value;
+        }
     }
 
     public PrefabBoardFloor CsPrefabBoardFloorCurrent
@@ -51,37 +62,57 @@ public class PrefabPiece : MonoBehaviour
         }
     }
 
-    private void InstantiatePiece(GameObject gameObjPiece)
+    public void InstantiatePiece(GameObject gameObjPiece, bool isEnableClick)
     {
         GameObject gameobj_piece = Instantiate(gameObjPiece, this.transform);
 
         gameobj_piece.transform.localPosition = Vector3.zero;
 
-        gameobj_piece.GetComponent<BehaviourIPointerClick>().UniEvClick.AddListener(delegate
+        if (isEnableClick)
         {
-            SelectPiece();
-        });
+            gameobj_piece.GetComponent<BehaviourIPointerClick>().UniEvClick.AddListener(delegate
+            {
+                SelectPiece();
+            });
+
+            _csBehaviourMaterialFlickerA.MeshRendThis = gameobj_piece.GetComponent<MeshRenderer>();
+            if (CsDataPiece.isWhite) _csBehaviourMaterialFlickerA.ColorInto = _colorFlickerWhite;
+            else _csBehaviourMaterialFlickerA.ColorInto = _colorFlickerBlack;
+        }
+        else
+        {
+            gameobj_piece.GetComponent<MeshCollider>().enabled = false;
+        }
     }
 
     public void SelectPiece()
     {
-        if (_isEnemy)
-        {
-            Debug.Log("This is an Enemy's Piece");
-            _csManagerMovePiece.ValidateEnemy(this);
-        }
-        else
-        {
-            _csManagerMovePiece.HighlightFloor(this);
-        }
+        _csManagerMovePiece.SelectPiece(this);
+    }
+
+    public void ActivatePiece()
+    {
+        _csBehaviourMaterialFlickerA.StartFlicker();
+    }
+
+    public void DeactivatePiece()
+    {
+        _csBehaviourMaterialFlickerA.StopFlicker();
     }
 
     public void MovePiece(PrefabBoardFloor csPrefabBoardFloor)
     {
+        CsPrefabBoardFloorCurrent = csPrefabBoardFloor;
+
         Vector3 v3_pos = new Vector3(csPrefabBoardFloor.transform.localPosition.x, transform.localPosition.y, csPrefabBoardFloor.transform.localPosition.z);
 
-        _csBehaviourMoveTransformB.MovePosition(v3_pos);
+        MovePos(v3_pos);
+    }
 
-        CsPrefabBoardFloorCurrent = csPrefabBoardFloor;
+    public void MovePos(Vector3 v3Pos)
+    {
+        if (_isOnFirstFloor) _isOnFirstFloor = false;
+
+        _csBehaviourMoveTransformB.MovePosition(v3Pos);
     }
 }
