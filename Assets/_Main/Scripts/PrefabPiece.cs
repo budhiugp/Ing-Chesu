@@ -7,7 +7,8 @@ public class PrefabPiece : MonoBehaviour
     [SerializeField] private Color _colorFlickerWhite = Color.blue;
     [SerializeField] private Color _colorFlickerBlack = Color.red;
 
-    private bool _isOnFirstFloor;
+    [SerializeField] private bool _isOnFirstFloor;
+    [SerializeField] private bool _isEnPassantable;
 
     [SerializeField] private PrefabBoardFloor _csPrefabBoardFloorCurrent;
 
@@ -40,6 +41,18 @@ public class PrefabPiece : MonoBehaviour
         }
     }
 
+    public bool IsEnPassantable
+    {
+        get
+        {
+            return _isEnPassantable;
+        }
+        set
+        {
+            _isEnPassantable = value;
+        }
+    }
+
     public PrefabBoardFloor CsPrefabBoardFloorCurrent
     {
         get
@@ -62,13 +75,13 @@ public class PrefabPiece : MonoBehaviour
         }
     }
 
-    public void InstantiatePiece(GameObject gameObjPiece, bool isEnableClick)
+    public void InstantiatePiece(GameObject gameObjPiece, bool isEnable)
     {
         GameObject gameobj_piece = Instantiate(gameObjPiece, this.transform);
 
         gameobj_piece.transform.localPosition = Vector3.zero;
 
-        if (isEnableClick)
+        if (isEnable)
         {
             gameobj_piece.GetComponent<BehaviourIPointerClick>().UniEvClick.AddListener(delegate
             {
@@ -83,6 +96,14 @@ public class PrefabPiece : MonoBehaviour
         {
             gameobj_piece.GetComponent<MeshCollider>().enabled = false;
         }
+    }
+
+    public void Promotion(DataPiece csDataPiece)
+    {
+        Destroy(transform.GetChild(0).gameObject);
+
+        _csDataPiece = csDataPiece;
+        InstantiatePiece(csDataPiece.GameObjPiece, true);
     }
 
     public void SelectPiece()
@@ -113,6 +134,6 @@ public class PrefabPiece : MonoBehaviour
     {
         if (_isOnFirstFloor) _isOnFirstFloor = false;
 
-        _csBehaviourMoveTransformB.MovePosition(v3Pos);
+        _csBehaviourMoveTransformB.MovePosition(v3Pos, _csManagerMovePiece.ResponseMovePiece);
     }
 }

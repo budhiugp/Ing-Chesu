@@ -53,6 +53,7 @@ MonoBehaviour:
     ListMovementType: 
   _colorFlickerWhite: {r: 0, g: 0, b: 1, a: 1}
   _colorFlickerBlack: {r: 1, g: 0, b: 0, a: 1}
+  _isOnFirstFloor: 0
   _csPrefabBoardFloorCurrent: {fileID: 0}
   _csBehaviourMoveTransformB: {fileID: -1788476003693264270}
   _csBehaviourMaterialFlickerA: {fileID: 164910371345219017}

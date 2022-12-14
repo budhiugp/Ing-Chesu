@@ -11,6 +11,6 @@ public class DataBoardFloor
 
     public string DebugThis()
     {
-        return "CXIndex = " + CXIndex + ", CYIndex = " + CYIndex;
+        return "IFile = " + IFile + ", IRank = " + IRank + "\nCXIndex = " + CXIndex + ", CYIndex = " + CYIndex;
     }
 }

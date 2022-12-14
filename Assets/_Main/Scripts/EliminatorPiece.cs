@@ -14,7 +14,7 @@ public class EliminatorPiece : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private float _fPieceDistance = 1f;
-    [SerializeField] private List<float> _listAvailableXPos = new List<float>();
+    [SerializeField] private List<float> _listAvailableZPos = new List<float>();
 
     public void EliminatePiece(PrefabPiece csPrefabPiece)
     {
@@ -41,31 +41,31 @@ public class EliminatorPiece : MonoBehaviour
 
     private void RepositionPrefabPiece(List<PrefabPiece> _listPrefabPiece, Transform transGraveyard)
     {
-        List<float> list_available_xpos = GenerateAvailableXPositions(_listPrefabPiece.Count);
+        List<float> list_available_zpos = GenerateAvailableZPositions(_listPrefabPiece.Count);
 
         for (int i = 0; i < _listPrefabPiece.Count; i++)
         {
-            Vector3 v3_pos = new Vector3(list_available_xpos[i], transGraveyard.localPosition.y, transGraveyard.localPosition.z);
+            Vector3 v3_pos = new Vector3(transGraveyard.localPosition.x, transGraveyard.localPosition.y, list_available_zpos[i]);
             _listPrefabPiece[i].MovePos(v3_pos);
         }
     }
 
-    private List<float> GenerateAvailableXPositions(int iPieceCount)
+    private List<float> GenerateAvailableZPositions(int iPieceCount)
     {
-        _listAvailableXPos.Clear();
+        _listAvailableZPos.Clear();
 
         float f_length = _fPieceDistance * (iPieceCount - 1);
         float f_firstpoint = f_length / -2;
 
         for (int i = 0; i < iPieceCount; i++)
         {
-            float f_point_x = f_firstpoint + (i * _fPieceDistance);
+            float f_point_z = f_firstpoint + (i * _fPieceDistance);
 
-            _listAvailableXPos.Add(f_point_x + transform.position.x);
+            _listAvailableZPos.Add(f_point_z + transform.position.z);
         }
 
-        _listAvailableXPos.Reverse();
+        _listAvailableZPos.Reverse();
 
-        return _listAvailableXPos;
+        return _listAvailableZPos;
     }
 }

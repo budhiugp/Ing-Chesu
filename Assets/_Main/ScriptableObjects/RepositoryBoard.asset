@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f28b981a45b62c849b3c619fdd543d78, type: 3}
-  m_Name: RepositoryUser
+  m_Script: {fileID: 11500000, guid: 8a6488a83dabab24fba487d66dee9c7e, type: 3}
+  m_Name: RepositoryBoard
   m_EditorClassIdentifier: 
-  CsDataUser:
-    SUserName: Elraida
-    IsWhite: 0
-  _setDebugWhite: 1
+  CsDataBoardGame:
+    IsTurnWhite: 0

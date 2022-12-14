@@ -3,6 +3,9 @@ using UnityEngine.Events;
 
 public class PrefabBoardFloor : MonoBehaviour
 {
+    public enum EnumSelectFloorType { Default, Castling, Promotion, EnPassantable, EnPassant }
+    public EnumSelectFloorType SelectFloorType;
+
     [SerializeField] private DataBoardFloor _csDataBoardFloor;
     private ManagerMovePiece _csManagerMovePiece;
 
@@ -13,6 +16,8 @@ public class PrefabBoardFloor : MonoBehaviour
     [SerializeField] private UnityEvent _uniEvTurnOffHistory;
 
     [SerializeField] private PrefabPiece _csPrefabPieceStepOn;
+
+    private UnityEvent _uniEvAddon = new UnityEvent();
 
     public DataBoardFloor CsDataBoardFloor
     {
@@ -100,7 +105,77 @@ public class PrefabBoardFloor : MonoBehaviour
 
     public void SelectFloor()
     {
-        _csManagerMovePiece.SelectFloor(this);
+        _csManagerMovePiece.SelectFloor(this, SelectFloorType, _uniEvAddon);
+    }
+
+    private void ResetSelectFloorType()
+    {
+        SelectFloorType = EnumSelectFloorType.Default;
+
+        _uniEvAddon.RemoveAllListeners();
+    }
+
+    public void SetFloorDefault()
+    {
+        Debug.LogWarning("SetFloorDefault Call");
+
+        SelectFloorType = EnumSelectFloorType.Default;
+
+        _uniEvAddon.AddListener(delegate
+        {
+            Debug.LogWarning("SetFloorDefault _uniEvAddon.AddListener _csPrefabPieceStepOn.IsEnPassantable = " + _csPrefabPieceStepOn.IsEnPassantable);
+
+            _csPrefabPieceStepOn.IsEnPassantable = false;
+            
+            ResetSelectFloorType();
+        });
+    }
+
+    public void SetFloorCastling(PrefabPiece csPrefabPiece, PrefabBoardFloor csPrefabBoardFloor)
+    {
+        SelectFloorType = EnumSelectFloorType.Castling;
+
+        _uniEvAddon.AddListener(delegate
+        {
+            csPrefabPiece.MovePiece(csPrefabBoardFloor);
+
+            ResetSelectFloorType();
+        });
+    }
+
+    public void SetFloorPromotion()
+    {
+        SelectFloorType = EnumSelectFloorType.Promotion;
+
+        _uniEvAddon.AddListener(delegate
+        {
+            ResetSelectFloorType();
+        });
+    }
+
+    public void SetFloorEnPassantable()
+    {
+        SelectFloorType = EnumSelectFloorType.EnPassantable;
+
+        _uniEvAddon.AddListener(delegate
+        {
+            _csPrefabPieceStepOn.IsEnPassantable = true;
+
+            ResetSelectFloorType();
+        });
+    }
+
+    public void SetFloorEnPassant(PrefabBoardFloor csPrefabBoardFloor)
+    {
+        SelectFloorType = EnumSelectFloorType.EnPassant;
+
+        _uniEvAddon.AddListener(delegate
+        {
+            _csManagerMovePiece.EliminatePiece(csPrefabBoardFloor.CsPrefabPieceStepOn);
+            csPrefabBoardFloor.SteppedOff();
+
+            ResetSelectFloorType();
+        });
     }
 
     public void TurnOnHistory()

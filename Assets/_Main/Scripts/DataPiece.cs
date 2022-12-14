@@ -10,7 +10,7 @@ public class DataPiece
     public GameObject GameObjPiece;
     public bool isWhite;
 
-    public enum EnumMovementType { Vertical, Horizontal, Diagonal, Knight, Pawn, King }
+    public enum EnumMovementType { Vertical, Horizontal, Diagonal, Knight, Pawn, King, Castling}
     public List<EnumMovementType> ListMovementType = new List<EnumMovementType>();
 
     public string DebugThis()

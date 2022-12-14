@@ -15,13 +15,22 @@ public class GeneratorPiece : MonoBehaviour
     [Header("Classes")]
     [SerializeField] private GeneratorBoardFloor _csGeneratorBoardFloor;
     [SerializeField] private ManagerMovePiece _csManagerMovePiece;
+    [SerializeField] private ManagerCheck _csManagerCheck;
     [SerializeField] private CustomDebug _csCustomDebug;
 
     public void Initialization()
     {
         Debug.Log(_csCustomDebug.DebugColor(this.name + " Initialization") + " Begin");
 
-        LoadFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        //LoadFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); //Default
+
+        //LoadFen("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1"); //Castling
+
+        //LoadFen("8/8/8/8/8/8/PPPPPPPP/R7 w KQkq - 0 1"); //Promotion
+
+        //LoadFen("8/4pppp/8/8/8/8/1PPPPPPP/R7 w KQkq - 0 1"); //EnPassant
+
+        LoadFen("1nbqkbn1/r2p1p1r/8/8/8/8/R2P1P1R/1NBQKBN1 w KQkq - 0 1");
     }
 
     public void LoadFen(string sFen)
@@ -74,8 +83,17 @@ public class GeneratorPiece : MonoBehaviour
         cs_prefabpiece.CsDataPiece = csDataPiece;
         cs_prefabpiece.CsPrefabBoardFloorCurrent = cs_prefabboardfloor;
         cs_prefabpiece.CsManagerMovePiece = _csManagerMovePiece;
-        cs_prefabpiece.InstantiatePiece(csDataPiece.GameObjPiece, _scrObjRepoUser.CsDataUser.IsWhite && csDataPiece.isWhite);
+        //Debug cs_prefabpiece.InstantiatePiece(csDataPiece.GameObjPiece, _scrObjRepoUser.CsDataUser.IsWhite == csDataPiece.isWhite);
+        cs_prefabpiece.InstantiatePiece(csDataPiece.GameObjPiece, true);
 
         gameobj_piece.transform.localPosition = cs_prefabboardfloor.transform.localPosition;
+
+        if(csDataPiece.CId.Equals('k'))
+        {
+            _csManagerCheck.CsPrefabPieceKingBlack = cs_prefabpiece;
+        } else if (csDataPiece.CId.Equals('K'))
+        {
+            _csManagerCheck.CsPrefabPieceKingWhite = cs_prefabpiece;
+        }
     }
 }

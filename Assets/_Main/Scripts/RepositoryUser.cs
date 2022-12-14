@@ -5,6 +5,8 @@ public class RepositoryUser : ScriptableObject
 {
     public DataUser CsDataUser;
 
+    [SerializeField] private bool _setDebugWhite;
+
     public string DebugThis()
     {
         return "DataUser :\n" + CsDataUser.DebugThis();
@@ -17,6 +19,6 @@ public class RepositoryUser : ScriptableObject
 
     public void Debug()
     {
-        CsDataUser.IsWhite = true;
+        CsDataUser.IsWhite = _setDebugWhite;
     }
 }
