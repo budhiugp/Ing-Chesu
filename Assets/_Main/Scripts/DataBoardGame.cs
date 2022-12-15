@@ -1,10 +1,10 @@
 [System.Serializable]
 public class DataBoardGame
 {
-    public bool IsTurnWhite;
+    public bool IsWhiteTurn;
 
     public string DebugThis()
     {
-        return "IsTurnWhite = " + IsTurnWhite;
+        return "IsWhiteTurn = " + IsWhiteTurn;
     }
 }

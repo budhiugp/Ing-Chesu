@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GeneratorPiece : MonoBehaviour
 {
@@ -18,6 +18,11 @@ public class GeneratorPiece : MonoBehaviour
     [SerializeField] private ManagerCheck _csManagerCheck;
     [SerializeField] private CustomDebug _csCustomDebug;
 
+    [Header("UnityEvents")]
+    [SerializeField] private UnityEvent _uniEvOnCompleteInitialization;
+
+    private Coroutine _corLoadFen;
+
     public void Initialization()
     {
         Debug.Log(_csCustomDebug.DebugColor(this.name + " Initialization") + " Begin");
@@ -30,10 +35,18 @@ public class GeneratorPiece : MonoBehaviour
 
         //LoadFen("8/4pppp/8/8/8/8/1PPPPPPP/R7 w KQkq - 0 1"); //EnPassant
 
-        LoadFen("1nbqkbn1/r2p1p1r/8/8/8/8/R2P1P1R/1NBQKBN1 w KQkq - 0 1");
+        //LoadFen("1nbqkbn1/r2p1p1r/8/8/8/8/R2P1P1R/1NBQKBN1 w KQkq - 0 1"); //other
+        LoadFen("1nbqkbn1/r6r/8/8/8/8/R6R/1NBQKBN1 w KQkq - 0 1");
     }
 
     public void LoadFen(string sFen)
+    {
+        if (_corLoadFen != null) StopCoroutine(_corLoadFen);
+
+        _corLoadFen = StartCoroutine(CorLoadFen(sFen));
+    }
+
+    private IEnumerator CorLoadFen(string sFen)
     {
         string s_fen_board = sFen.Split(' ')[0];
         int i_file = 0, i_rank = 7;
@@ -67,7 +80,11 @@ public class GeneratorPiece : MonoBehaviour
                     i_file++;
                 }
             }
+
+            yield return null;
         }
+
+        _uniEvOnCompleteInitialization.Invoke();
     }
 
     private void GeneratePiece(DataPiece csDataPiece, int iFile, int iRank)
@@ -83,15 +100,16 @@ public class GeneratorPiece : MonoBehaviour
         cs_prefabpiece.CsDataPiece = csDataPiece;
         cs_prefabpiece.CsPrefabBoardFloorCurrent = cs_prefabboardfloor;
         cs_prefabpiece.CsManagerMovePiece = _csManagerMovePiece;
-        //Debug cs_prefabpiece.InstantiatePiece(csDataPiece.GameObjPiece, _scrObjRepoUser.CsDataUser.IsWhite == csDataPiece.isWhite);
+        //Debug cs_prefabpiece.InstantiatePiece(csDataPiece.GameObjPiece, _scrObjRepoUser.CsDataUserPlayer.IsWhite == csDataPiece.isWhite);
         cs_prefabpiece.InstantiatePiece(csDataPiece.GameObjPiece, true);
 
         gameobj_piece.transform.localPosition = cs_prefabboardfloor.transform.localPosition;
 
-        if(csDataPiece.CId.Equals('k'))
+        if (csDataPiece.CId.Equals('k'))
         {
             _csManagerCheck.CsPrefabPieceKingBlack = cs_prefabpiece;
-        } else if (csDataPiece.CId.Equals('K'))
+        }
+        else if (csDataPiece.CId.Equals('K'))
         {
             _csManagerCheck.CsPrefabPieceKingWhite = cs_prefabpiece;
         }

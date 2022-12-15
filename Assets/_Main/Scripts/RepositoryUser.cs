@@ -3,22 +3,28 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "RepositoryUser", menuName = "Repository User")]
 public class RepositoryUser : ScriptableObject
 {
-    public DataUser CsDataUser;
-
-    [SerializeField] private bool _setDebugWhite;
+    public DataUser CsDataUserPlayer;
+    public DataUser CsDataUserAI;
 
     public string DebugThis()
     {
-        return "DataUser :\n" + CsDataUser.DebugThis();
+        return "CsDataUserPlayer :\n" + CsDataUserPlayer.DebugThis() + "\n=====\nCsDataUserAI :\n" + CsDataUserAI;
     }
 
-    public void ClearData()
+    public void SelectAsWhite()
     {
-        CsDataUser.ClearData();
+        CsDataUserPlayer.IsWhite = true;
+        CsDataUserAI.IsWhite = false;
     }
 
-    public void Debug()
+    public void SelectAsBlack()
     {
-        CsDataUser.IsWhite = _setDebugWhite;
+        CsDataUserPlayer.IsWhite = false;
+        CsDataUserAI.IsWhite = true;
+    }
+
+    public void ClearDataPlayer()
+    {
+        CsDataUserPlayer.ClearData();
     }
 }

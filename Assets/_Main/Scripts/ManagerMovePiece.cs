@@ -14,6 +14,7 @@ public class ManagerMovePiece : MonoBehaviour
     [SerializeField] private EliminatorPiece _csEliminatorPiece;
     [SerializeField] private PromotionPiece _csPromotionPiece;
     [SerializeField] private ManagerCheck _csManagerCheck;
+    [SerializeField] private BoardReferee _csBoardReferee;
     [SerializeField] private CustomDebug _csCustomDebug;
 
     [Header("Temp")]
@@ -102,7 +103,9 @@ public class ManagerMovePiece : MonoBehaviour
     {
         Debug.Log("ResponseMovePiece i_file = " + _csPrefabPieceMoving.CsPrefabBoardFloorCurrent.IFile + ", i_rank = " + _csPrefabPieceMoving.CsPrefabBoardFloorCurrent.IRank);
 
-        _csManagerCheck.LookCheck(_scrObjRepoUser.CsDataUser.IsWhite);
+        _csManagerCheck.LookCheck(_scrObjRepoUser.CsDataUserPlayer.IsWhite);
+
+        _csBoardReferee.NextTurn();
     }
 
     private void ClearPrefabPieceActive()

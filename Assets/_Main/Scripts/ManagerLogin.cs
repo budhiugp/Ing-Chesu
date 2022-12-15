@@ -21,7 +21,7 @@ public class ManagerLogin : MonoBehaviour
 
     private void Start()
     {
-        _scrObjRepoUser.ClearData();
+        _scrObjRepoUser.ClearDataPlayer();
 
         if (PlayerPrefs.HasKey(_sUserNamePrefKey))
         {
@@ -29,7 +29,7 @@ public class ManagerLogin : MonoBehaviour
 
             _inputFieldUserName.text = s_username;
 
-            _scrObjRepoUser.CsDataUser.SUserName = s_username;
+            _scrObjRepoUser.CsDataUserPlayer.SUserName = s_username;
         }
     }
 
@@ -41,7 +41,7 @@ public class ManagerLogin : MonoBehaviour
 
         if (s_username != "")
         {
-            _scrObjRepoUser.CsDataUser.SUserName = s_username;
+            _scrObjRepoUser.CsDataUserPlayer.SUserName = s_username;
 
             PlayerPrefs.SetString(_sUserNamePrefKey, s_username);
 

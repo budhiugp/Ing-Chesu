@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28b981a45b62c849b3c619fdd543d78, type: 3}
   m_Name: RepositoryUser
   m_EditorClassIdentifier: 
-  CsDataUser:
+  CsDataUserPlayer:
     SUserName: Elraida
     IsWhite: 0
-  _setDebugWhite: 1
+  CsDataUserAI:
+    SUserName: Com
+    IsWhite: 1

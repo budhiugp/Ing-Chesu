@@ -11,6 +11,6 @@ public class ManagerMenu : MonoBehaviour
 
     public void SetUserInformation()
     {
-        _textUserName.text = _scrObjRepoUser.CsDataUser.SUserName;
+        _textUserName.text = _scrObjRepoUser.CsDataUserPlayer.SUserName;
     }
 }

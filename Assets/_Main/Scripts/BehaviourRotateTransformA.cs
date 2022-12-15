@@ -8,18 +8,18 @@ public class BehaviourRotateTransformA : MonoBehaviour
 
     public EnumEaseMode EaseMode;
 
-    public virtual void RotateTransform(Vector3 v3Pos, float fDuration)
+    public virtual void RotateTransform(Vector3 v3Rot, float fDuration)
     {
         KillTween();
 
-        transform.DOMove(v3Pos, fDuration).SetEase(GetEase()).SetId("RotateTransform" + gameObject.GetInstanceID());
+        transform.DORotate(v3Rot, fDuration).SetEase(GetEase()).SetId("RotateTransform" + gameObject.GetInstanceID());
     }
 
-    public virtual void RotateTransform(Vector3 v3Pos, float fDuration, Action actResponse)
+    public virtual void RotateTransform(Vector3 v3Rot, float fDuration, Action actResponse)
     {
         KillTween();
 
-        transform.DOMove(v3Pos, fDuration).SetEase(GetEase()).SetId("RotateTransform" + gameObject.GetInstanceID()).OnComplete(() =>
+        transform.DORotate(v3Rot, fDuration).SetEase(GetEase()).SetId("RotateTransform" + gameObject.GetInstanceID()).OnComplete(() =>
         {
             actResponse();
         });
