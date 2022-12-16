@@ -16,7 +16,7 @@ public class ManagerBoard : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log(_csCustomDebug.DebugColor(this.name + " StartGame") + " Begin");
+        //Debug.Log(_csCustomDebug.DebugColor(this.name + " StartGame") + " Begin");
 
         _uniEvOnStartGame.Invoke();
     }

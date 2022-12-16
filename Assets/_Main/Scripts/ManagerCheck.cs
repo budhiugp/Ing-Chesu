@@ -68,7 +68,7 @@ public class ManagerCheck : MonoBehaviour
 
     public void SetScanCheck(bool isWhite, PrefabBoardFloor csPrefabBoardFloor)
     {
-        Debug.Log(_csCustomDebug.DebugColor(this.name + " SetScanCheck") + " Begin");
+        //Debug.Log(_csCustomDebug.DebugColor(this.name + " SetScanCheck") + " Begin");
 
         DataCheck cs_datacheck = new DataCheck(csPrefabBoardFloor.CsPrefabPieceStepOn, csPrefabBoardFloor);
 
@@ -86,7 +86,7 @@ public class ManagerCheck : MonoBehaviour
         _isScanCheckSet = true;
 
         string s_check = "Check By ";
-
+    
         foreach (DataCheck cs_datacheck in _listDataCheck)
         {
             if (cs_datacheck.CsPrefabPiece.CsDataPiece.isWhite)
@@ -104,6 +104,8 @@ public class ManagerCheck : MonoBehaviour
         if (_listDataCheck.Count > 0)
         {
             _csDisplayerCheck.ShowDisplayCheck(s_check);
+
+            _scrObjRepoBoard.CsDataBoardGame.IsOnCheck = true;
         }
         else
         {
@@ -111,10 +113,12 @@ public class ManagerCheck : MonoBehaviour
         }
     }
 
-    public void LookCheck(bool isWhite)
+    public void LookCheck(bool isWhiteKing)
     {
         //Debug.Log(_csCustomDebug.DebugColor(this.name + " LookCheck") + " Begin : \nisWhite = " + isWhite);
         _listDataCheck.Clear();
+
+        _scrObjRepoBoard.CsDataBoardGame.IsOnCheck = false;
 
         _isScanCheckSet = false;
 
@@ -123,25 +127,25 @@ public class ManagerCheck : MonoBehaviour
         int i_file = 0;
         int i_rank = 0;
 
-        if (isWhite)
-        {
-            i_file = _csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IFile;
-            i_rank = _csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IRank;
-
-            Debug.Log("LookCheck _csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IFile = " + _csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IFile + "\n_csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IRank = " + _csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IRank);
-        }
-        else
+        if (isWhiteKing)
         {
             i_file = _csPrefabPieceKingWhite.CsPrefabBoardFloorCurrent.IFile;
             i_rank = _csPrefabPieceKingWhite.CsPrefabBoardFloorCurrent.IRank;
 
-            Debug.Log("LookCheck _csPrefabPieceKingWhite.CsPrefabBoardFloorCurrent.IFile = " + _csPrefabPieceKingWhite.CsPrefabBoardFloorCurrent.IFile + "\n_csPrefabPieceKingWhite.CsPrefabBoardFloorCurrent.IRank = " + _csPrefabPieceKingWhite.CsPrefabBoardFloorCurrent.IRank);
+            Debug.Log("LookCheck for White King on IFile = " + _csPrefabPieceKingWhite.CsPrefabBoardFloorCurrent.IFile + "\n_csPrefabPieceKingWhite.CsPrefabBoardFloorCurrent.IRank = " + _csPrefabPieceKingWhite.CsPrefabBoardFloorCurrent.IRank);
+        }
+        else
+        {
+            i_file = _csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IFile;
+            i_rank = _csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IRank;
+
+            Debug.Log("LookCheck for Black King on IFile = " + _csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IFile + "\n_csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IRank = " + _csPrefabPieceKingBlack.CsPrefabBoardFloorCurrent.IRank);
         }
 
-        _csScanCheckVertical.ScanCheckDirection(i_file, i_rank, isWhite);
-        _csScanCheckHorizontal.ScanCheckDirection(i_file, i_rank, isWhite);
-        _csScanCheckDiagonal.ScanCheckDirection(i_file, i_rank, isWhite);
-        _csScanCheckKnight.ScanCheckDirection(i_file, i_rank, isWhite);
+        _csScanCheckVertical.ScanCheckDirection(i_file, i_rank, isWhiteKing);
+        _csScanCheckHorizontal.ScanCheckDirection(i_file, i_rank, isWhiteKing);
+        _csScanCheckDiagonal.ScanCheckDirection(i_file, i_rank, isWhiteKing);
+        _csScanCheckKnight.ScanCheckDirection(i_file, i_rank, isWhiteKing);
     }
 
     public void PreventCheckWhite(bool isWhite)
@@ -151,11 +155,11 @@ public class ManagerCheck : MonoBehaviour
 
     public void ScanCheckFloorSave(PrefabBoardFloor csPrefabBoardFloor, bool isWhite)
     {
-        //Debug.Log(_csCustomDebug.DebugColor(this.name + " ScanCheckFloorSave") + " isWhite");
+        Debug.Log(_csCustomDebug.DebugColor(this.name + " ScanCheckFloorSave") + " Begin on iFile = " + csPrefabBoardFloor.IFile + ", iRank = " + csPrefabBoardFloor.IRank + "\nisWhite = " + isWhite);
 
-        //_csScanCheckVertical.ScanCheckDirectionSave(csPrefabBoardFloor, isWhite);
-        //_csScanCheckHorizontal.ScanCheckDirection(csPrefabBoardFloor.IFile, csPrefabBoardFloor.IRank, isWhite, actResponse);
-        //_csScanCheckDiagonal.ScanCheckDirection(csPrefabBoardFloor.IFile, csPrefabBoardFloor.IRank, isWhite, actResponse);
-        //_csScanCheckKnight.ScanCheckDirection(csPrefabBoardFloor.IFile, csPrefabBoardFloor.IRank, isWhite, actResponse);
+        _csScanCheckVertical.ScanCheckDirectionSave(csPrefabBoardFloor, isWhite);
+        _csScanCheckHorizontal.ScanCheckDirectionSave(csPrefabBoardFloor, isWhite);
+        //Diagonal
+        //Knight
     }
 }

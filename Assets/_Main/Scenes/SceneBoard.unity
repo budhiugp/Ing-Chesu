@@ -493,6 +493,8 @@ MonoBehaviour:
   _scrObjRepoUser: {fileID: 11400000, guid: 46ce9219d2c20cf438679ecc7ac405d2, type: 2}
   _csDisplayerPhase: {fileID: 81687009}
   _csGeneratorMovePiece: {fileID: 827266261}
+  _csManagerCheck: {fileID: 503134887}
+  _csGeneratorPiece: {fileID: 1561504727}
   _csCustomDebug: {fileID: 2060476858}
   _isGameOver: 0
   _csDataUserCurrent:
@@ -2168,7 +2170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa05d0b6aed792746911137c42fb14cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scrObjRepoUser: {fileID: 11400000, guid: 46ce9219d2c20cf438679ecc7ac405d2, type: 2}
+  _scrObjRepoBoard: {fileID: 11400000, guid: 1eb2cecb614edf4438e22f4bd659a9d4, type: 2}
   _csGeneratorBoardFloor: {fileID: 81687007}
   _csGeneratorMovePiece: {fileID: 827266261}
   _csEliminatorPiece: {fileID: 1561504728}
@@ -2188,9 +2190,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02994e02b9457d345a4cdac45408a3c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scrObjRepoBoard: {fileID: 11400000, guid: 1eb2cecb614edf4438e22f4bd659a9d4, type: 2}
   _csGeneratorBoardFloor: {fileID: 81687007}
   _csManagerCheck: {fileID: 503134887}
   _csCustomDebug: {fileID: 2060476858}
+  _listPrefabBoardFloorDestinationHighlight: []
+  _listPrefabBoardFloorSave: []
+  _listPrefabBoardFloorNotSave: []
 --- !u!1 &872068666
 GameObject:
   m_ObjectHideFlags: 0
@@ -3520,6 +3526,8 @@ MonoBehaviour:
   _scrObjRepoUser: {fileID: 11400000, guid: 46ce9219d2c20cf438679ecc7ac405d2, type: 2}
   _gameObjPrefabPiece: {fileID: 5173686514048138952, guid: b3ae1bba83bdcff4abed4721b0727427, type: 3}
   _transGroupPrefabPiece: {fileID: 2125997572}
+  ListPrefabPieceWhite: []
+  ListPrefabPieceBlack: []
   _csGeneratorBoardFloor: {fileID: 81687007}
   _csManagerMovePiece: {fileID: 827266260}
   _csManagerCheck: {fileID: 503134887}

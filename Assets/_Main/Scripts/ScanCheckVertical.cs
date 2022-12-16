@@ -8,17 +8,21 @@ public class ScanCheckVertical : ScanCheck
     }
     
     private bool _isStill;
+    private bool _isStillSave;
+    private bool _isReturn;
 
-    public void ScanCheckDirection(int iFile, int iRank, bool isWhite)
+    public void ScanCheckDirection(int iFile, int iRank, bool isWhiteKing)
     {
-        //Debug.Log(this + " ScanCheckDirection Begin : \niFile = " + iFile + ", iRank = " + iRank + ", isWhite = " + isWhite);
+        //Debug.Log(this + " ScanCheckDirection Begin : \niFile = " + iFile + ", iRank = " + iRank + ", isWhiteKing = " + isWhiteKing);
+
+        //ValidateCheck(iFile, iRank, isWhiteKing, DataPiece.EnumMovementType.Vertical, SetIsStillToFalse);
 
         //Top
         _isStill = true;
         for (int i = 1; i <= 7; i++)
         {
             if (!_isStill || iRank + i > 7) break;
-            ValidateCheck(iFile, iRank + i, isWhite, DataPiece.EnumMovementType.Vertical, SetIsStillToFalse);
+            ValidateCheck(iFile, iRank + i, isWhiteKing, DataPiece.EnumMovementType.Vertical, SetIsStillToFalse);
         }
 
         //Down
@@ -26,38 +30,48 @@ public class ScanCheckVertical : ScanCheck
         for (int i = 1; i <= 7; i++)
         {
             if (!_isStill || iRank - i < 0) break;
-            ValidateCheck(iFile, iRank - i, isWhite, DataPiece.EnumMovementType.Vertical, SetIsStillToFalse);
+            ValidateCheck(iFile, iRank - i, isWhiteKing, DataPiece.EnumMovementType.Vertical, SetIsStillToFalse);
         }
-    }
-
-    public void ScanCheckDirectionSave(PrefabBoardFloor csPrefabBoardFloor, bool isWhite)
-    {
-        /*
-        Debug.Log(this + " ScanCheckDirectionSave Begin : \ncsPrefabBoardFloor : \n" + csPrefabBoardFloor.DebugThis() + ", isWhite = " + isWhite);
-    
-        int i_file = csPrefabBoardFloor.IFile;
-        int i_rank = csPrefabBoardFloor.IRank;
-
-        //Top
-        _isStill = true;
-        for (int i = 1; i <= 7; i++)
-        {
-            if (!_isStill || i_rank + i > 7) break;
-            ValidateCheckSave(i_file, i_rank + i, isWhite, DataPiece.EnumMovementType.Vertical, SetIsStillToFalse, csPrefabBoardFloor);
-        }
-
-        //Down
-        _isStill = true;
-        for (int i = 1; i <= 7; i++)
-        {
-            if (!_isStill || i_rank - i < 0) break;
-            ValidateCheckSave(i_file, i_rank - i, isWhite, DataPiece.EnumMovementType.Vertical, SetIsStillToFalse, csPrefabBoardFloor);
-        }
-        */
     }
 
     private void SetIsStillToFalse()
     {
         _isStill = false;
+    }
+
+    public void ScanCheckDirectionSave(PrefabBoardFloor csPrefabBoardFloor, bool isWhiteKing)
+    {
+        int i_file = csPrefabBoardFloor.IFile;
+        int i_rank = csPrefabBoardFloor.IRank;
+
+        _isReturn = false;
+
+        //Top
+        _isStillSave = true;
+        for (int i = 1; i <= 7; i++)
+        {
+            if (!_isStillSave || i_rank + i > 7) break;
+            if(_isReturn) return;
+            ValidateCheckSave(i_file, i_rank + i, isWhiteKing, DataPiece.EnumMovementType.Vertical, SetIsStillSaveToFalse, SetIsReturn, csPrefabBoardFloor);
+        }
+
+        //Down
+        _isStillSave = true;
+        for (int i = 1; i <= 7; i++)
+        {
+            if (!_isStillSave || i_rank - i < 0) break;
+            if(_isReturn) return;
+            ValidateCheckSave(i_file, i_rank - i, isWhiteKing, DataPiece.EnumMovementType.Vertical, SetIsStillSaveToFalse, SetIsReturn, csPrefabBoardFloor);
+        }
+    }
+
+    private void SetIsStillSaveToFalse()
+    {
+        _isStillSave = false;
+    }
+
+    private void SetIsReturn()
+    {
+        _isReturn = true;
     }
 }

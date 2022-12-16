@@ -35,7 +35,7 @@ public class ManagerLogin : MonoBehaviour
 
     public void Login()
     {
-        Debug.Log(_csCustomDebug.DebugColor(this.name + " Login") + " Begin _inputFieldUserName.text = " + _inputFieldUserName.text.Trim());
+        //Debug.Log(_csCustomDebug.DebugColor(this.name + " Login") + " Begin _inputFieldUserName.text = " + _inputFieldUserName.text.Trim());
 
         string s_username = _inputFieldUserName.text.Trim();
 

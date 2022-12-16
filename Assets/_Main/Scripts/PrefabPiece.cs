@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PrefabPiece : MonoBehaviour
@@ -98,6 +99,11 @@ public class PrefabPiece : MonoBehaviour
         }
     }
 
+    public void EnablePiece(bool bSet)
+    {
+        transform.GetChild(0).GetComponent<MeshCollider>().enabled = bSet;
+    }
+
     public void Promotion(DataPiece csDataPiece)
     {
         Destroy(transform.GetChild(0).gameObject);
@@ -134,6 +140,22 @@ public class PrefabPiece : MonoBehaviour
     {
         if (_isOnFirstFloor) _isOnFirstFloor = false;
 
-        _csBehaviourMoveTransformB.MovePosition(v3Pos, _csManagerMovePiece.ResponseMovePiece);
+        _csBehaviourMoveTransformB.MovePosition(v3Pos);
+    }
+
+    public void MovePiece(PrefabBoardFloor csPrefabBoardFloor, Action actResponse)
+    {
+        CsPrefabBoardFloorCurrent = csPrefabBoardFloor;
+
+        Vector3 v3_pos = new Vector3(csPrefabBoardFloor.transform.localPosition.x, transform.localPosition.y, csPrefabBoardFloor.transform.localPosition.z);
+
+        MovePos(v3_pos, actResponse);
+    }
+
+    public void MovePos(Vector3 v3Pos, Action actResponse)
+    {
+        if (_isOnFirstFloor) _isOnFirstFloor = false;
+
+        _csBehaviourMoveTransformB.MovePosition(v3Pos, actResponse);
     }
 }

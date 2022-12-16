@@ -27,7 +27,7 @@ public class GeneratorBoardFloor : MonoBehaviour
 
     public void GenerateBoardFloor()
     {
-        Debug.Log(_csCustomDebug.DebugColor(this.name + " GenerateBoardFloor") + " Begin");
+        //Debug.Log(_csCustomDebug.DebugColor(this.name + " GenerateBoardFloor") + " Begin");
 
         ListPrefabBoardFloor.Clear();
 

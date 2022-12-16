@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,8 @@ public class GeneratorPiece : MonoBehaviour
     [Header("Generator Components")]
     [SerializeField] private GameObject _gameObjPrefabPiece;
     [SerializeField] private Transform _transGroupPrefabPiece;
+    [SerializeField] private List<PrefabPiece> ListPrefabPieceWhite = new List<PrefabPiece>();
+    [SerializeField] private List<PrefabPiece> ListPrefabPieceBlack = new List<PrefabPiece>();
 
     [Header("Classes")]
     [SerializeField] private GeneratorBoardFloor _csGeneratorBoardFloor;
@@ -25,9 +28,9 @@ public class GeneratorPiece : MonoBehaviour
 
     public void Initialization()
     {
-        Debug.Log(_csCustomDebug.DebugColor(this.name + " Initialization") + " Begin");
+        //Debug.Log(_csCustomDebug.DebugColor(this.name + " Initialization") + " Begin");
 
-        //LoadFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); //Default
+        LoadFen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); //Default
 
         //LoadFen("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1"); //Castling
 
@@ -36,12 +39,16 @@ public class GeneratorPiece : MonoBehaviour
         //LoadFen("8/4pppp/8/8/8/8/1PPPPPPP/R7 w KQkq - 0 1"); //EnPassant
 
         //LoadFen("1nbqkbn1/r2p1p1r/8/8/8/8/R2P1P1R/1NBQKBN1 w KQkq - 0 1"); //other
-        LoadFen("1nbqkbn1/r6r/8/8/8/8/R6R/1NBQKBN1 w KQkq - 0 1");
+        //LoadFen("1nbqkbn1/r6r/8/8/8/8/R6R/1NBQKBN1 w KQkq - 0 1");
+        //LoadFen("1nbqkbn1/r3r3/8/8/8/8/R3R3/1NBQKBN1 w KQkq - 0 1");
     }
 
     public void LoadFen(string sFen)
     {
         if (_corLoadFen != null) StopCoroutine(_corLoadFen);
+
+        ListPrefabPieceWhite.Clear();
+        ListPrefabPieceBlack.Clear();
 
         _corLoadFen = StartCoroutine(CorLoadFen(sFen));
     }
@@ -105,6 +112,9 @@ public class GeneratorPiece : MonoBehaviour
 
         gameobj_piece.transform.localPosition = cs_prefabboardfloor.transform.localPosition;
 
+        if(csDataPiece.isWhite) ListPrefabPieceWhite.Add(cs_prefabpiece);
+        else ListPrefabPieceBlack.Add(cs_prefabpiece);
+
         if (csDataPiece.CId.Equals('k'))
         {
             _csManagerCheck.CsPrefabPieceKingBlack = cs_prefabpiece;
@@ -112,6 +122,28 @@ public class GeneratorPiece : MonoBehaviour
         else if (csDataPiece.CId.Equals('K'))
         {
             _csManagerCheck.CsPrefabPieceKingWhite = cs_prefabpiece;
+        }
+    }
+
+    public void EnablePieceWhite()
+    {
+        SetEnablePieceToWhite(true);
+    }
+
+    public void EnablePieceBlack()
+    {
+        SetEnablePieceToWhite(false);
+    }
+
+    private void SetEnablePieceToWhite(bool isWhite)
+    {
+        foreach(PrefabPiece cs_prefabpiece in ListPrefabPieceWhite)
+        {
+            cs_prefabpiece.EnablePiece(isWhite);
+        }
+        foreach(PrefabPiece cs_prefabpiece in ListPrefabPieceBlack)
+        {
+            cs_prefabpiece.EnablePiece(!isWhite);
         }
     }
 }

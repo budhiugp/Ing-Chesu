@@ -59,6 +59,8 @@ public class MovePieceKing : MovePiece
 
     private void ValidateFloorKing(int iFile, int iRank, bool isWhite)
     {
+        Debug.Log("ValidateFloorKing iFile = " + iFile + ", iRank = " + iRank + ", isWhite = " + isWhite);
+        
         PrefabBoardFloor cs_prefabboardfloor = _csGeneratorBoardFloor.GetPrefabBoardFloorByFileNRank(iFile, iRank);
 
         if (cs_prefabboardfloor.CsPrefabPieceStepOn == null)
@@ -77,7 +79,7 @@ public class MovePieceKing : MovePiece
     private void ValidateFloorCastling(int iFile, int iRank, bool isLeft)
     {
         PrefabBoardFloor cs_prefabboardfloor = _csGeneratorBoardFloor.GetPrefabBoardFloorByFileNRank(iFile, iRank);
-        
+
         if (cs_prefabboardfloor != null && cs_prefabboardfloor.CsPrefabPieceStepOn != null)
         {
             char c_piece_id = char.ToLower(cs_prefabboardfloor.CsPrefabPieceStepOn.CsDataPiece.CId);

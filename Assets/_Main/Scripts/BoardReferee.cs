@@ -11,6 +11,8 @@ public class BoardReferee : MonoBehaviour
     [Header("Classes")]
     [SerializeField] private DisplayerPhase _csDisplayerPhase;
     [SerializeField] private GeneratorMovePiece _csGeneratorMovePiece;
+    [SerializeField] private ManagerCheck _csManagerCheck;
+    [SerializeField] private GeneratorPiece _csGeneratorPiece;
     [SerializeField] private CustomDebug _csCustomDebug;
 
     [Header("Other")]
@@ -21,7 +23,7 @@ public class BoardReferee : MonoBehaviour
 
     public void StartPlaySequence()
     {
-        Debug.Log(_csCustomDebug.DebugColor(this.name + " StartPlaySequence") + " Begin");
+        //Debug.Log(_csCustomDebug.DebugColor(this.name + " StartPlaySequence") + " Begin");
 
         _scrObjRepoBoard.CsDataBoardGame.IsWhiteTurn = true;
         _isGameOver = false;
@@ -33,7 +35,7 @@ public class BoardReferee : MonoBehaviour
 
     private void PlayerTurnSequence()
     {
-        Debug.Log(_csCustomDebug.DebugColor(this.name + " PlayerTurnSequence") + " Begin");
+        //Debug.Log(_csCustomDebug.DebugColor(this.name + " PlayerTurnSequence") + " Begin");
 
         if (_isGameOver)
         {
@@ -47,12 +49,17 @@ public class BoardReferee : MonoBehaviour
 
             if (_csDataUserCurrent.SUserName.Equals(_scrObjRepoUser.CsDataUserPlayer.SUserName))
             {
-                s_phasename = "It's Your Start";
+                s_phasename = "It's Your's Turn";
             }
             else
             {
                 s_phasename = "It's Player " + _csDataUserCurrent.SUserName + "'s Turn";
             }
+
+            if(_scrObjRepoBoard.CsDataBoardGame.IsWhiteTurn) _csGeneratorPiece.EnablePieceWhite();
+            else _csGeneratorPiece.EnablePieceBlack();
+            
+            _csManagerCheck.LookCheck(_scrObjRepoBoard.CsDataBoardGame.IsWhiteTurn);
 
             _csGeneratorMovePiece.GenerateMovePieceSave(_scrObjRepoBoard.CsDataBoardGame.IsWhiteTurn);
 

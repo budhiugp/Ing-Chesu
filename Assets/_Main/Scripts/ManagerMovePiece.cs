@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class ManagerMovePiece : MonoBehaviour
 {
     [Header("Repositories")]
-    [SerializeField] private RepositoryUser _scrObjRepoUser;
+    [SerializeField] private RepositoryBoard _scrObjRepoBoard;
 
     [Header("Classes")]
     [SerializeField] private GeneratorBoardFloor _csGeneratorBoardFloor;
@@ -26,7 +26,7 @@ public class ManagerMovePiece : MonoBehaviour
 
     public void SelectPiece(PrefabPiece csPrefabPiece)
     {
-        Debug.Log(_csCustomDebug.DebugColor(this.name + " SelectPiece") + " Begin : \ncsPrefabPiece : " + csPrefabPiece.CsDataPiece.DebugThis());
+        //Debug.Log(_csCustomDebug.DebugColor(this.name + " SelectPiece") + " Begin : \ncsPrefabPiece : " + csPrefabPiece.CsDataPiece.DebugThis());
 
         if (_csPrefabPieceActive == csPrefabPiece)
         {
@@ -93,7 +93,7 @@ public class ManagerMovePiece : MonoBehaviour
 
         _csPrefabPieceMoving = _csPrefabPieceActive;
 
-        _csPrefabPieceActive.MovePiece(csPrefabBoardFloor);
+        _csPrefabPieceActive.MovePiece(csPrefabBoardFloor, ResponseMovePiece);
 
         ClearPrefabPieceActive();
         _csGeneratorMovePiece.ClearPrefabBoardFloorHighlight();
@@ -101,9 +101,7 @@ public class ManagerMovePiece : MonoBehaviour
 
     public void ResponseMovePiece()
     {
-        Debug.Log("ResponseMovePiece i_file = " + _csPrefabPieceMoving.CsPrefabBoardFloorCurrent.IFile + ", i_rank = " + _csPrefabPieceMoving.CsPrefabBoardFloorCurrent.IRank);
-
-        _csManagerCheck.LookCheck(_scrObjRepoUser.CsDataUserPlayer.IsWhite);
+        //Debug.Log("ResponseMovePiece i_file = " + _csPrefabPieceMoving.CsPrefabBoardFloorCurrent.IFile + ", i_rank = " + _csPrefabPieceMoving.CsPrefabBoardFloorCurrent.IRank);
 
         _csBoardReferee.NextTurn();
     }
